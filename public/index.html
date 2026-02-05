@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenPulse - 글로벌 재생에너지 뉴스</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header-inner">
+      <h1 class="logo"><span class="logo-icon">&#9889;</span> GreenPulse</h1>
+      <p class="tagline">주요국 재생에너지 정책 &middot; 프로젝트 &middot; 트렌드</p>
+    </div>
+  </header>
+
+  <!-- 필터 바 -->
+  <nav class="filter-bar">
+    <div class="filter-inner">
+      <!-- 국가 탭 -->
+      <div class="country-tabs" id="countryTabs"></div>
+      <!-- 검색 -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="키워드 검색 (예: 태양광, hydrogen, net zero ...)" />
+        <button id="searchBtn" class="btn-search" aria-label="검색">&#128269;</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="main">
+    <!-- 상태 표시 -->
+    <div class="status-bar" id="statusBar">
+      <span id="statusText">뉴스를 불러오는 중...</span>
+      <button id="refreshBtn" class="btn-refresh" title="새로고침">&#8635;</button>
+    </div>
+
+    <!-- 뉴스 카드 그리드 -->
+    <div class="news-grid" id="newsGrid">
+      <!-- 로딩 스켈레톤 -->
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+
+    <!-- 빈 상태 -->
+    <div class="empty-state hidden" id="emptyState">
+      <div class="empty-icon">&#127758;</div>
+      <p>해당 조건의 뉴스를 찾을 수 없습니다.</p>
+      <p class="empty-sub">다른 국가를 선택하거나 검색어를 변경해 보세요.</p>
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <p>GreenPulse &copy; 2026 &mdash; RSS 기반 재생에너지 뉴스 애그리게이터</p>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
