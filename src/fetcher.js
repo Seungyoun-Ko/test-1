@@ -1,5 +1,6 @@
 const RSSParser = require('rss-parser');
 const { feeds, keywords, countryKeywords } = require('./config');
+const sampleArticles = require('./sampleData');
 
 const parser = new RSSParser({
   timeout: 10000,
@@ -103,9 +104,15 @@ async function fetchAllFeeds() {
   // 최신순 정렬
   articles.sort((a, b) => b.timestamp - a.timestamp);
 
-  cachedArticles = articles;
+  // RSS 수집 결과가 없으면 샘플 데이터로 폴백
+  if (articles.length === 0) {
+    console.log('RSS 피드 수집 결과 없음 → 샘플 데이터 사용');
+    cachedArticles = sampleArticles;
+  } else {
+    cachedArticles = articles;
+  }
   lastFetchTime = Date.now();
-  return articles.length;
+  return cachedArticles.length;
 }
 
 /**
