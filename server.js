@@ -9,6 +9,9 @@ const PORT = process.env.PORT || 3000;
 // 정적 파일 서빙
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 워드프레스 플러그인 미리보기 서빙
+app.use('/wp-preview', express.static(path.join(__dirname, 'wordpress-plugin')));
+
 // API: 국가 목록
 app.get('/api/countries', (_req, res) => {
   res.json(countries);

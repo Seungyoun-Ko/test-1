@@ -1,0 +1,627 @@
+/**
+ * GreenPulse - Renewable Energy News Aggregator for WordPress
+ *
+ * All classes are prefixed with .greenpulse- to avoid conflicts with WordPress themes.
+ * Modern, responsive design with green energy theme.
+ */
+
+/* ========================================================================
+   CSS Custom Properties (Color Variables)
+   ======================================================================== */
+
+.greenpulse-wrap {
+  --gp-bg: #f0f4f0;
+  --gp-surface: #ffffff;
+  --gp-primary: #16a34a;
+  --gp-primary-dark: #15803d;
+  --gp-primary-light: #bbf7d0;
+  --gp-text: #1e293b;
+  --gp-text-muted: #64748b;
+  --gp-border: #e2e8f0;
+}
+
+/* ========================================================================
+   Main Wrapper - Reset & Typography
+   ======================================================================== */
+
+.greenpulse-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', 'Noto Sans', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--gp-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.greenpulse-wrap *,
+.greenpulse-wrap *::before,
+.greenpulse-wrap *::after {
+  box-sizing: border-box;
+}
+
+/* ========================================================================
+   Header
+   ======================================================================== */
+
+.greenpulse-header {
+  background: linear-gradient(135deg, #166534 0%, #0d9488 100%);
+  color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.greenpulse-logo {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.025em;
+}
+
+.greenpulse-tagline {
+  opacity: 0.85;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ========================================================================
+   Filters - Sticky Top Bar
+   ======================================================================== */
+
+.greenpulse-filters {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--gp-surface);
+  border-bottom: 1px solid var(--gp-border);
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.greenpulse-country-tabs {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.greenpulse-tab {
+  padding: 0.5rem 1rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--gp-border);
+  background: var(--gp-surface);
+  color: var(--gp-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  outline: none;
+}
+
+.greenpulse-tab:hover {
+  border-color: var(--gp-primary);
+  background: var(--gp-primary-light);
+}
+
+.greenpulse-tab.active {
+  background: var(--gp-primary);
+  color: #ffffff;
+  border-color: var(--gp-primary);
+}
+
+.greenpulse-search-box {
+  display: flex;
+  gap: 0.5rem;
+  min-width: 260px;
+  align-items: center;
+}
+
+.greenpulse-search-input {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--gp-border);
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s ease;
+  background: var(--gp-surface);
+}
+
+.greenpulse-search-input:focus {
+  border-color: var(--gp-primary);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.greenpulse-search-input::placeholder {
+  color: var(--gp-text-muted);
+}
+
+.greenpulse-search-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--gp-primary);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.greenpulse-search-btn:hover {
+  background: var(--gp-primary-dark);
+  transform: scale(1.05);
+}
+
+/* ========================================================================
+   Ad Blocks
+   ======================================================================== */
+
+.greenpulse-ad {
+  text-align: center;
+  padding: 1rem;
+  margin: 1.25rem 0;
+  min-height: 90px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px dashed var(--gp-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gp-text-muted);
+  font-size: 0.75rem;
+}
+
+.greenpulse-ad-top,
+.greenpulse-ad-bottom {
+  width: 100%;
+}
+
+.greenpulse-ad-middle {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+/* ========================================================================
+   Status Bar
+   ======================================================================== */
+
+.greenpulse-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--gp-text-muted);
+  margin-bottom: 1rem;
+  padding: 0 0.25rem;
+}
+
+.greenpulse-status-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.greenpulse-status-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.greenpulse-btn-refresh {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gp-border);
+  background: var(--gp-surface);
+  color: var(--gp-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.greenpulse-btn-refresh:hover {
+  border-color: var(--gp-primary);
+  background: var(--gp-primary);
+  color: #ffffff;
+}
+
+.greenpulse-btn-refresh.spinning {
+  animation: greenpulse-spin 1s linear infinite;
+}
+
+/* ========================================================================
+   News Grid
+   ======================================================================== */
+
+.greenpulse-news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* ========================================================================
+   News Card
+   ======================================================================== */
+
+.greenpulse-card {
+  background: var(--gp-surface);
+  border-radius: 12px;
+  border: 1px solid var(--gp-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.greenpulse-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.greenpulse-card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.greenpulse-card-placeholder {
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(135deg, var(--gp-primary) 0%, #0d9488 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.greenpulse-card-body {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.greenpulse-card-source {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gp-primary);
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.greenpulse-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--gp-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.greenpulse-card-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.greenpulse-card-title a:hover {
+  color: var(--gp-primary);
+}
+
+.greenpulse-card-snippet {
+  font-size: 0.85rem;
+  color: var(--gp-text-muted);
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.greenpulse-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--gp-border);
+  font-size: 0.75rem;
+  color: var(--gp-text-muted);
+  gap: 0.5rem;
+}
+
+.greenpulse-card-date {
+  flex: 1;
+}
+
+.greenpulse-card-lang {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 99px;
+  background: #f1f5f9;
+  color: var(--gp-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* ========================================================================
+   Empty State
+   ======================================================================== */
+
+.greenpulse-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--gp-text-muted);
+}
+
+.greenpulse-empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.greenpulse-empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gp-text);
+  margin: 0 0 0.5rem 0;
+}
+
+.greenpulse-empty-message {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* ========================================================================
+   Loading State
+   ======================================================================== */
+
+.greenpulse-loading {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--gp-text-muted);
+}
+
+.greenpulse-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--gp-border);
+  border-top-color: var(--gp-primary);
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  animation: greenpulse-spin 0.8s linear infinite;
+}
+
+.greenpulse-loading-text {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* ========================================================================
+   Skeleton Placeholders
+   ======================================================================== */
+
+.greenpulse-skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: greenpulse-pulse 1.5s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.greenpulse-skeleton-card {
+  background: var(--gp-surface);
+  border-radius: 12px;
+  border: 1px solid var(--gp-border);
+  overflow: hidden;
+  height: 100%;
+}
+
+.greenpulse-skeleton-image {
+  width: 100%;
+  height: 180px;
+}
+
+.greenpulse-skeleton-body {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.greenpulse-skeleton-source {
+  height: 14px;
+  width: 80px;
+}
+
+.greenpulse-skeleton-title {
+  height: 20px;
+  width: 100%;
+}
+
+.greenpulse-skeleton-title-line {
+  height: 20px;
+  width: 70%;
+}
+
+.greenpulse-skeleton-snippet {
+  height: 16px;
+  width: 100%;
+}
+
+.greenpulse-skeleton-snippet-line {
+  height: 16px;
+  width: 85%;
+}
+
+.greenpulse-skeleton-meta {
+  height: 14px;
+  width: 100px;
+  margin-top: 0.5rem;
+}
+
+/* ========================================================================
+   Animations
+   ======================================================================== */
+
+@keyframes greenpulse-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes greenpulse-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ========================================================================
+   Responsive Design - Mobile
+   ======================================================================== */
+
+@media (max-width: 768px) {
+  .greenpulse-wrap {
+    padding: 0 0.75rem;
+  }
+
+  .greenpulse-header {
+    padding: 1.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .greenpulse-logo {
+    font-size: 1.5rem;
+  }
+
+  .greenpulse-tagline {
+    font-size: 0.875rem;
+  }
+
+  .greenpulse-filters {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .greenpulse-country-tabs {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .greenpulse-country-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .greenpulse-tab {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.85rem;
+  }
+
+  .greenpulse-search-box {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .greenpulse-news-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .greenpulse-status-bar {
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .greenpulse-card-image {
+    height: 160px;
+  }
+
+  .greenpulse-card-body {
+    padding: 0.875rem 1rem;
+  }
+
+  .greenpulse-empty,
+  .greenpulse-loading {
+    padding: 3rem 1rem;
+  }
+
+  .greenpulse-empty-icon {
+    font-size: 3rem;
+  }
+
+  .greenpulse-empty-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ========================================================================
+   Utility Classes
+   ======================================================================== */
+
+.greenpulse-hidden {
+  display: none !important;
+}
+
+.greenpulse-visible {
+  display: block !important;
+}
+
+.greenpulse-text-center {
+  text-align: center;
+}
+
+.greenpulse-mt-1 {
+  margin-top: 0.5rem;
+}
+
+.greenpulse-mt-2 {
+  margin-top: 1rem;
+}
+
+.greenpulse-mb-1 {
+  margin-bottom: 0.5rem;
+}
+
+.greenpulse-mb-2 {
+  margin-bottom: 1rem;
+}

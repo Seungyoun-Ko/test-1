@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenPulse - WordPress Plugin Preview</title>
+<link rel="stylesheet" href="greenpulse/assets/css/greenpulse.css">
+<style>
+  body { background: #f0f4f0; margin: 0; padding: 2rem 1rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif; }
+  .preview-banner { max-width: 1280px; margin: 0 auto 1rem; background: #1e293b; color: white; padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+  .preview-banner code { background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 4px; }
+  .ad-demo { background: #fffbeb; border: 2px dashed #f59e0b; padding: 1.5rem; text-align: center; border-radius: 8px; color: #92400e; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<div class="preview-banner">
+  <span>WordPress Plugin Preview - 실제 워드프레스에서는 <code>[greenpulse]</code> 숏코드로 삽입</span>
+  <span>greenpulse v1.0.0</span>
+</div>
+
+<div class="greenpulse-wrap">
+  <!-- Header -->
+  <div class="greenpulse-header">
+    <h2 class="greenpulse-logo">&#9889; GreenPulse</h2>
+    <p class="greenpulse-tagline">주요국 재생에너지 정책 &middot; 프로젝트 &middot; 트렌드</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="greenpulse-filters">
+    <div class="greenpulse-country-tabs" id="countryTabs"></div>
+    <div class="greenpulse-search-box">
+      <input type="text" class="greenpulse-search-input" id="searchInput" placeholder="키워드 검색 (예: 태양광, hydrogen, net zero ...)" />
+      <button class="greenpulse-search-btn" id="searchBtn">&#128269;</button>
+    </div>
+  </div>
+
+  <!-- Top Ad Demo -->
+  <div class="greenpulse-ad greenpulse-ad-top">
+    <div class="ad-demo">&#128240; 상단 광고 영역 (Google AdSense 등) - 워드프레스 관리자 설정에서 광고 코드 입력</div>
+  </div>
+
+  <!-- Status -->
+  <div class="greenpulse-status-bar">
+    <span id="statusText">뉴스를 불러오는 중...</span>
+    <button class="greenpulse-btn-refresh" id="refreshBtn" title="새로고침">&#8635;</button>
+  </div>
+
+  <!-- News Grid -->
+  <div id="newsGrid" class="greenpulse-news-grid"></div>
+
+  <!-- Empty State -->
+  <div id="emptyState" class="greenpulse-empty greenpulse-hidden">
+    <div class="greenpulse-empty-icon">&#127758;</div>
+    <p class="greenpulse-empty-title">검색 결과가 없습니다</p>
+    <p class="greenpulse-empty-message">다른 국가를 선택하거나 검색어를 변경해 보세요.</p>
+  </div>
+
+  <!-- Bottom Ad Demo -->
+  <div class="greenpulse-ad greenpulse-ad-bottom">
+    <div class="ad-demo">&#128240; 하단 광고 영역</div>
+  </div>
+</div>
+
+<script>
+const countries = [
+  { code: 'global', name: '글로벌', flag: '🌍' },
+  { code: 'us', name: '미국', flag: '🇺🇸' },
+  { code: 'eu', name: '유럽', flag: '🇪🇺' },
+  { code: 'cn', name: '중국', flag: '🇨🇳' },
+  { code: 'jp', name: '일본', flag: '🇯🇵' },
+  { code: 'kr', name: '한국', flag: '🇰🇷' },
+  { code: 'in', name: '인도', flag: '🇮🇳' },
+  { code: 'au', name: '호주', flag: '🇦🇺' },
+];
+
+const countryKeywords = {
+  global: [],
+  us: ['united states','u.s.','usa','american','doe','texas','california','미국'],
+  eu: ['europe','european','eu ','germany','france','european commission','유럽'],
+  cn: ['china','chinese','beijing','중국'],
+  jp: ['japan','japanese','tokyo','일본','meti'],
+  kr: ['korea','korean','seoul','한국','kepco','한전','산업통상자원부'],
+  in: ['india','indian','delhi','인도','modi'],
+  au: ['australia','australian','sydney','호주','snowy hydro'],
+};
+
+const now = Date.now();
+const sampleArticles = [
+  { title: 'U.S. DOE Announces $3.5 Billion for Grid-Scale Battery Storage', link: '#', snippet: 'The DOE unveiled a massive investment plan to deploy grid-scale battery storage systems across 15 states, aiming to store 50GW of renewable energy by 2030 as part of the Inflation Reduction Act.', source: 'Renewable Energy World', lang: 'en', image: '', pubDate: new Date(now - 1*3600000).toISOString(), fullText: 'U.S. DOE battery storage united states doe renewable energy' },
+  { title: 'European Commission Approves €20B Green Hydrogen Strategy for 2030', link: '#', snippet: 'The European Commission has formally adopted a landmark green hydrogen strategy allocating €20 billion to develop electrolyzer capacity and hydrogen infrastructure across member states.', source: 'Recharge News', lang: 'en', image: '', pubDate: new Date(now - 2*3600000).toISOString(), fullText: 'European Commission green hydrogen strategy europe european eu' },
+  { title: '한국 해상풍력 8.2GW 로드맵 확정 — 산업부 발표', link: '#', snippet: '산업통상자원부는 2030년까지 해상풍력 8.2GW 보급 로드맵을 확정 발표했다. 전남·경북·제주 해역에 대규모 단지를 조성하며, 지역 주민 수용성과 환경영향평가 절차를 강화할 방침이다.', source: '전기신문', lang: 'ko', image: '', pubDate: new Date(now - 3*3600000).toISOString(), fullText: '한국 해상풍력 산업통상자원부 korea 재생에너지 풍력' },
+  { title: "China Completes World's Largest Solar Farm in Xinjiang at 5GW", link: '#', snippet: "China has connected the world's largest single-site solar farm to its grid in Xinjiang province. The 5GW facility spans 80,000 hectares and is paired with a 1.2GW battery storage system.", source: 'PV Magazine', lang: 'en', image: '', pubDate: new Date(now - 5*3600000).toISOString(), fullText: 'China solar farm chinese beijing renewable energy solar' },
+  { title: 'India Sets New Renewable Energy Record: 200GW Installed Capacity', link: '#', snippet: "India has officially crossed the 200GW mark in total installed renewable energy capacity, driven by rapid solar deployment in Rajasthan and Gujarat. PM Modi called it a defining moment.", source: 'CleanTechnica', lang: 'en', image: '', pubDate: new Date(now - 6*3600000).toISOString(), fullText: 'India renewable energy 200GW indian modi solar delhi' },
+  { title: 'Japan Launches $4B Offshore Wind Expansion in Hokkaido and Akita', link: '#', snippet: "Japan's METI announced a $4 billion offshore wind expansion targeting Hokkaido and Akita prefectures. The plan aims to add 3GW of capacity by 2028.", source: 'Recharge News', lang: 'en', image: '', pubDate: new Date(now - 7*3600000).toISOString(), fullText: 'Japan offshore wind expansion japanese meti tokyo wind energy' },
+  { title: "Australia's Snowy 2.0 Pumped Hydro Reaches 60% Completion", link: '#', snippet: 'The Snowy 2.0 pumped hydro project in New South Wales has reached 60% completion. It will provide 2,000MW of dispatchable renewable energy storage.', source: 'RenewEconomy', lang: 'en', image: '', pubDate: new Date(now - 8*3600000).toISOString(), fullText: 'Australia snowy hydro pumped hydropower australian renewable energy sydney' },
+  { title: 'Global Wind Power Additions Hit Record 120GW in 2025', link: '#', snippet: 'The Global Wind Energy Council reported that worldwide wind power installations reached a record 120GW in 2025. China accounted for nearly 60% of new capacity.', source: 'BBC Sci & Env', lang: 'en', image: '', pubDate: new Date(now - 10*3600000).toISOString(), fullText: 'Global wind power record 120GW wind energy offshore wind' },
+  { title: '한전, 제주 태양광·ESS 연계 마이크로그리드 실증 착수', link: '#', snippet: 'KEPCO(한국전력)는 제주도에서 태양광 발전과 ESS를 연계한 마이크로그리드 실증사업에 착수했다.', source: '이투뉴스', lang: 'ko', image: '', pubDate: new Date(now - 12*3600000).toISOString(), fullText: '한전 제주 태양광 ESS 마이크로그리드 KEPCO 한국 korea' },
+  { title: 'EU Carbon Border Tax Takes Effect, Reshaping Global Trade', link: '#', snippet: 'The EU CBAM is now fully operational, imposing carbon tariffs on imported steel, cement, aluminum, and fertilizers.', source: 'Reuters', lang: 'en', image: '', pubDate: new Date(now - 14*3600000).toISOString(), fullText: 'EU Carbon Border Tax european commission europe carbon' },
+  { title: 'Texas Becomes Top U.S. State for Solar, Surpassing California', link: '#', snippet: 'Texas has overtaken California as the leading U.S. state for new solar installations in 2025, adding 12GW of utility-scale solar capacity.', source: 'NYT Climate', lang: 'en', image: '', pubDate: new Date(now - 16*3600000).toISOString(), fullText: 'Texas solar united states u.s. usa california solar renewable energy' },
+  { title: 'China Unveils Perovskite Solar Cell with 33.7% Efficiency', link: '#', snippet: 'Chinese researchers achieved a world-record 33.7% efficiency in tandem perovskite-silicon solar cells. Expected to enter commercial production by 2027.', source: 'PV Magazine', lang: 'en', image: '', pubDate: new Date(now - 20*3600000).toISOString(), fullText: 'China perovskite solar cell chinese solar photovoltaic renewable energy' },
+];
+
+let currentCountry = 'global';
+let currentQuery = '';
+const AD_INTERVAL = 4;
+
+// Render country tabs
+const tabsEl = document.getElementById('countryTabs');
+tabsEl.innerHTML = countries.map(c =>
+  `<button class="greenpulse-tab${c.code === 'global' ? ' active' : ''}" data-country="${c.code}">${c.flag} ${c.name}</button>`
+).join('');
+
+function escapeHtml(s) {
+  if (!s) return '';
+  const m = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+  return s.replace(/[&<>"']/g, c => m[c]);
+}
+
+function formatDate(d) {
+  const diff = Date.now() - new Date(d).getTime();
+  const h = Math.floor(diff/3600000);
+  if (h < 1) return '방금 전';
+  if (h < 24) return h + '시간 전';
+  const days = Math.floor(h/24);
+  if (days < 7) return days + '일 전';
+  return new Date(d).toLocaleDateString('ko-KR');
+}
+
+function filterArticles() {
+  let arts = sampleArticles;
+  if (currentCountry !== 'global') {
+    const kws = countryKeywords[currentCountry] || [];
+    arts = arts.filter(a => kws.some(k => a.fullText.toLowerCase().includes(k.toLowerCase())));
+  }
+  if (currentQuery) {
+    const q = currentQuery.toLowerCase();
+    arts = arts.filter(a => a.fullText.toLowerCase().includes(q));
+  }
+  return arts;
+}
+
+function render() {
+  const articles = filterArticles();
+  const grid = document.getElementById('newsGrid');
+  const empty = document.getElementById('emptyState');
+  const status = document.getElementById('statusText');
+  const cName = countries.find(c => c.code === currentCountry)?.name || '글로벌';
+  const qInfo = currentQuery ? ` · "${currentQuery}"` : '';
+
+  if (articles.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('greenpulse-hidden');
+    status.innerHTML = `<strong>${cName}</strong> 재생에너지 뉴스 <strong>0</strong>건${qInfo}`;
+    return;
+  }
+  empty.classList.add('greenpulse-hidden');
+  status.innerHTML = `<strong>${cName}</strong> 재생에너지 뉴스 <strong>${articles.length}</strong>건${qInfo}`;
+
+  let html = '';
+  articles.forEach((a, i) => {
+    if (AD_INTERVAL > 0 && i > 0 && i % AD_INTERVAL === 0) {
+      html += `<div class="greenpulse-ad greenpulse-ad-middle"><div class="ad-demo">&#128240; 뉴스 사이 광고 영역 (${i}번째 카드 뒤)</div></div>`;
+    }
+    html += `<article class="greenpulse-card">
+      <div class="greenpulse-card-placeholder">&#9889;</div>
+      <div class="greenpulse-card-body">
+        <div class="greenpulse-card-source">${escapeHtml(a.source)}</div>
+        <h3 class="greenpulse-card-title"><a href="${escapeHtml(a.link)}" target="_blank" rel="noopener">${escapeHtml(a.title)}</a></h3>
+        <p class="greenpulse-card-snippet">${escapeHtml(a.snippet)}</p>
+        <div class="greenpulse-card-meta">
+          <span class="greenpulse-card-date">${formatDate(a.pubDate)}</span>
+          <span class="greenpulse-card-lang">${a.lang.toUpperCase()}</span>
+        </div>
+      </div>
+    </article>`;
+  });
+  grid.innerHTML = html;
+}
+
+// Events
+tabsEl.addEventListener('click', e => {
+  const tab = e.target.closest('.greenpulse-tab');
+  if (!tab) return;
+  currentCountry = tab.dataset.country;
+  document.querySelectorAll('.greenpulse-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  render();
+});
+
+document.getElementById('searchBtn').addEventListener('click', () => {
+  currentQuery = document.getElementById('searchInput').value.trim();
+  render();
+});
+
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { currentQuery = e.target.value.trim(); render(); }
+});
+
+document.getElementById('refreshBtn').addEventListener('click', function() {
+  this.classList.add('spinning');
+  setTimeout(() => { this.classList.remove('spinning'); render(); }, 800);
+});
+
+// Init
+render();
+</script>
+</body>
+</html>
